@@ -19,9 +19,9 @@ module EasyTranslate
           pool.process { batch_results[i] = self.send(method, texts_batch, options, http_options) }
         end
         pool.shutdown
-        results = batch_results.reduce(:+)
+        results = batch_results.compact.reduce(:+) if batch_results.present?
       else
-        results = batches.map { |texts_batch| self.send(method, texts_batch, options, http_options) }.reduce(:+)
+        results = batches.map { |texts_batch| self.send(method, texts_batch, options, http_options) }.compact.reduce(:+)
       end
       # if they only asked for one, only give one back
       texts.is_a?(String) ? results[0] : results

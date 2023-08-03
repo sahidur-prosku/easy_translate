@@ -83,7 +83,7 @@ module EasyTranslate
       # The body for the request
       # @return [String] the body for the request, URL escaped
       def body
-        @texts.map { |t| "q=#{CGI::escape(t)}" }.join '&'
+        @texts.map { |t| "q=#{CGI::escape(t.to_s)}" }.join '&'
       end
 
       # Whether or not this was a request for multiple texts
